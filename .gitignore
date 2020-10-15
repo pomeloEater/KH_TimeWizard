@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,java,java-web,eclipse,visualstudiocode
 
 ### Eclipse ###
+Servers/
 .metadata
 bin/
 tmp/
