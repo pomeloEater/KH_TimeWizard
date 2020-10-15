@@ -23,8 +23,8 @@
 		sendMessage();
 		$('#message').val('')
 	});
-
-	let sock = new SockJS("http://172.30.1.6:8787/web/echo/"); 
+	
+	let sock = new SockJS("http://localhost:8787/web/echo/"); 
 	//아이피 부분을 자기 아이피로 바꾸거나 localhost로 지정해야함
 	
 	// sock의 이벤트 = 뒤에 지정한 함수
