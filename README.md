@@ -48,7 +48,7 @@
 ### 🚩Menu
 
 - [📃daily](#📃Daily)
-- [📈weekly,monthly](#weekly,monthly)
+- [📈weekly,monthly](#weekly)
 - [👫friend](#👫Friend)
 - [👪group](#👪Group)
 
@@ -61,7 +61,7 @@
 
 <br>
 
-### 📈weekly,monthly
+### 📈weekly
 
 - 한 주, 한달동안의 일정을 chart와 달력으로 보여준다.
 
