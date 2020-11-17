@@ -48,20 +48,20 @@
 ### 🚩Menu
 
 - [📃daily](#📃Daily)
-- [📈weekly,monthly](###📈Weekly,Monthly)
+- [📈weekly,monthly](#weekly,monthly)
 - [👫friend](#👫Friend)
 - [👪group](#👪Group)
 
 ---
 
-### 📃Daily
+### 📃daily
 
 - 하루 일정을 적는 부분
 - 일정을 완료하면 10분단위로 시간이 시각화 된다.
 
 <br>
 
-### 📈Weekly,Monthly
+### 📈weekly,monthly
 
 - 한 주, 한달동안의 일정을 chart와 달력으로 보여준다.
 
