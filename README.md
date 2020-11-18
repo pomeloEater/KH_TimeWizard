@@ -59,6 +59,12 @@
 - 하루 일정을 적는 부분
 - 일정을 완료하면 10분단위로 시간이 시각화 된다.
 
+![daily_modal](https://postfiles.pstatic.net/MjAyMDExMThfMjM0/MDAxNjA1NjcwNDgwNDQy.xNvL5ZECkmrixWzAWcmalOJoPPgPd0n20CKDuf7oPHkg.AKKx0ry_GkLlIV3S6WmN1UM6FcL8LgFlQD_01kKq7ZAg.PNG.mingyeung/image.png?type=w966)
+
+<br>
+
+![daily](https://postfiles.pstatic.net/MjAyMDExMThfNDYg/MDAxNjA1NjcwMzI3MTI0.Vc2azQ4kmFXpzXTzom08Z99ZfmXTTAvLK144ybleYXog.iVzdyeDBGrmpxdgYhi9dNnNyFBqayZmNdwV2ZaEXn_Ig.PNG.mingyeung/image.png?type=w966)
+
 <br>
 
 ### 📈Weekly,Monthly
