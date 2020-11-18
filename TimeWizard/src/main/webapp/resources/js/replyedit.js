@@ -121,7 +121,6 @@
 		htmls += '</textarea>';		
 		htmls += '</p>';
 		htmls += '</div>';	
-		console.log(htmls);
 		$("div.relist"+reply_no).html(htmls);
 		$("div.relist" + reply_no + ' #editContent').focus();
 

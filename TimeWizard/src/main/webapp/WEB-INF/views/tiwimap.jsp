@@ -30,8 +30,15 @@
 	<section class="contentsection">
 		<div style="height: 10vh;"></div>
 		<div class="map_wrap">
-			<div id="map"
-				style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+			<div class="anchorwrap">
+				<span class="closebtn" onclick='closeNav()'>
+				<i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
+				</span>
+				<span class="openmenu" onclick='openNav()'>
+				<i class="fa fa-angle-double-right fa-5" aria-hidden="true"></i>
+				</span>
+	       	</div>
+			<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden; color: black; border-radius: 30px;"></div>
 			<div id="menu_wrap" class="bg_white">
 				<div class="option">
 					<div>

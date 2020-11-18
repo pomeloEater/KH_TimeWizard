@@ -35,13 +35,6 @@ var flist;
 var nlist;
 
 
-
-$(document).ready(function () {
-
-	friendlist();
-
-	
-});
 function searchfriend(){
 var url = location.href;
 var inviteurl = "\""+url.split("/timewizard")[1]+"\"";
@@ -248,7 +241,7 @@ function friendlist(){
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 
 <script type="text/javascript">
-
+var reconnect = 0;
 var uno = ${login.user_no};
 	//handler에서 정해준 서버 겅로로 설정
 	sock = new SockJS("/timewizard/webserver");
@@ -271,6 +264,7 @@ var uno = ${login.user_no};
     });
 	//연결 했을시,
 	client.connect({}, function(){
+		friendlist();
 	    client.subscribe("/subscribe/alert/good/"+uno, function (data) {
 	    	var fnd = JSON.parse(data.body);
 	    	var fnd_name = fnd['user_name'];
@@ -384,6 +378,21 @@ var uno = ${login.user_no};
 	       	 	}, 3000); 		
 	        
     		});
+		}, function(error){
+			var count = 1;
+			$('.friendlist').append("<p>연결이 끊겼습니다.</p>");
+			if(reconnect ++ <= 10){
+				setTimeout(function (){
+					var count = 1;
+					$('.friendlist').empty();
+					$('.friendlist').append("<p>연결이 끊겼습니다. 재시도: "+count+"</p>");
+					sock = new SockJS("/timewizard/webserver");
+					// SockJS로 연결한 웹소켓 주소에 Stomp을 씌움
+					client = Stomp.over(sock);
+					connect();
+				},2*1000)		
+			}
+			
 		});
 	
 function alertsys(fno, mynum, fname){
@@ -556,6 +565,141 @@ function deletefriend(fno,myno,fname){
 		};
 
 	}
+	
+function connect(){
+	client.connect({}, function(){
+		friendlist();
+	    client.subscribe("/subscribe/alert/good/"+uno, function (data) {
+	    	var fnd = JSON.parse(data.body);
+	    	var fnd_name = fnd['user_name'];
+	    	var message = fnd_name+"님이 친구 신청을 하셨습니다.";
+	    	var fno = fnd["user_no"];
+	        var options = {
+	            body: message,
+	            icon: iconDataURI
+	        }
+	        //데스크탑 알림 요청
+	        var sendalert = new Notification("알람", options);
+	        
+	      //알림 후 1초 뒤 친구목록 다시 불러옴
+	        setTimeout(function () {
+	            //알람 메시지 닫기
+	            friendlist();
+	            //sendalert.close();
+	        	}, 1000);
+	        sendalert.onclick= function(){
+	        	window.open('/timewizard/main');
+	        };
+	    });
+	    client.subscribe("/subscribe/confirm/check/"+uno, function (data) {
+				
+	    	var chk = data.body;
+ 			var message = chk+"님이 친구추가를 수락하셨습니다.";
+ 				options = {
+ 		            body: message,
+ 		            icon: iconDataURI
+ 		        }
+ 			var checkalert = new Notification("친구 수락", options);
+	        
+ 				//알림 후 1초 뒤 친구목록 다시 불러옴
+	        setTimeout(function () {
+	            //얼람 메시지 닫기
+	             friendlist();
+	            //checkalert.close();
+	           
+	       	 	}, 1000); 		
+	       		checkalert.onclick = function(){ 
+	       			window.open('/timewizard/main');
+	       	
+	       		};
+	       
+	    	})
+	    	client.subscribe("/subscribe/confirm/denychk/"+uno, function(data){
+	    		var chk = data.body;
+	 			var message = chk+"님이 친구신청을 거절하셨습니다.";
+	 				options = {
+	 		            body: message,
+	 		            icon: iconDataURI
+	 		        }
+	 			var checkalert = new Notification("알림", options);
+		        
+	 				//알림 후 1초 뒤 친구목록 다시 불러옴
+		        setTimeout(function () {
+		            //얼람 메시지 닫기
+		            friendlist();
+		            //checkalert.close();
+		           
+		       	 	}, 1000); 		
+		        checkalert.onclick = function(){
+		     		window.open('/timewizard/main');
+		     	};
+		        
+	    	});
+	    client.subscribe("/subscribe/confirm/deletechk/"+uno, function(data){
+    		var chk = data.body;
+ 			var message = chk+"님이 친구목록에서 삭제하셨습니다.";
+ 				options = {
+ 		            body: message,
+ 		            icon: iconDataURI
+ 		        }
+ 			var resalert = new Notification("알림", options);
+	        
+ 				//알림 후 1초 뒤 친구목록 다시 불러옴
+	        setTimeout(function () {
+	            //얼람 메시지 닫기
+	            friendlist();
+	            //checkalert.close();
+	           
+	       	 	}, 1000); 		
+	       		resalert.onclick = function(){
+	     			window.open('/timewizard/main');
+	     		};
+	        
+    		});
+	    client.subscribe("/subscribe/invite/res/"+uno, function(data){
+    		var chk = JSON.parse(data.body);
+    		var name = chk['user_name']
+ 			var message = name+"님이 초대장을 보내셧습니다.";
+ 				options = {
+ 		            body: message,
+ 		            icon: iconDataURI
+ 		        }
+ 			var resalert = new Notification("알림", options);
+ 				resalert.onclick = function (){
+ 					window.open("/timewizard/main");
+ 				}
+ 				//알림 후 1초 뒤 친구목록 다시 불러옴
+	        setTimeout(function () {
+	            //얼람 메시지 닫기
+	            friendlist();
+	            //checkalert.close();
+	           	var check = confirm(name+"님의 초대를 수락하시겟습니까?");
+	           		if(check){
+	           			location.href = /timewizard/+chk['url']
+	           		}else{
+	           			
+	           		}
+	       	 	}, 3000); 		
+	        
+    		});
+		}, function(error){
+			var count = 1;
+			$('.friendlist').append("<p>연결이 끊겼습니다.</p>");
+			if(reconnect ++ <= 10){
+				setTimeout(function (){
+					var count = 2;
+					$('.friendlist').empty();
+					$('.friendlist').append("<p>연결이 끊겼습니다. 재시도: "+count+"</p>");
+					sock = new SockJS("/timewizard/webserver");
+					count++;
+					// SockJS로 연결한 웹소켓 주소에 Stomp을 씌움
+					client = Stomp.over(sock);
+				},2*1000)		
+			}
+			
+		});
+	
+}
 </script>
 </body>
 </html>

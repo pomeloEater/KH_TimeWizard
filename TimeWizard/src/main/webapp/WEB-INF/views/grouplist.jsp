@@ -101,6 +101,6 @@
 		</div>
 	</section>
 	
-	<jsp:include page="friendlist2.jsp"></jsp:include>
+	<jsp:include page="friendlist.jsp"></jsp:include>
 </body>
 </html>

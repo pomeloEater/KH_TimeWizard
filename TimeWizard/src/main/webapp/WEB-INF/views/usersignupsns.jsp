@@ -23,7 +23,7 @@
 				</div>
 				<div class="signbox">
 					<div class="buttons__div">
-						<button class="control-button up" form="sign-up-form">Sign Up</button>
+						<input type="submit" class="control-button up" form="sign-up-form" value="Sign Up" />
 						<button class="control-button cancel" onclick="location.href='./loginform'">Cancel</button>
 					</div>
 				</div>

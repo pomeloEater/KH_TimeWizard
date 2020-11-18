@@ -259,7 +259,7 @@ if (navigator.geolocation) {
 		}
 		
 		 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-		function removeAllChildNods(el) {   
+		function removeAllChildNods(el) { 
 		    while (el.hasChildNodes()) {
 		        el.removeChild (el.lastChild);
 		    }
@@ -271,3 +271,10 @@ if (navigator.geolocation) {
 		console.log("현재 위치 서비스를 지원하지 않는 브라우저입니다.");
 	}
 	
+/* 지도 모달 */
+	function openNav() {
+		document.getElementById('menu_wrap').style.width = '250px';
+	}
+	function closeNav() {
+		document.getElementById('menu_wrap').style.width = '0';
+	}
