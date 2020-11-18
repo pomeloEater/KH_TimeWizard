@@ -48,7 +48,7 @@
 ### 🚩Menu
 
 - [📃daily](#Daily)
-- [📈weekly,monthly](#Weekly,Monthly)
+- [📈weekly,monthly](#Weekly)
 - [👫friend](#Friend)
 - [👪group](#Group)
 
