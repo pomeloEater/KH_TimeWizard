@@ -67,9 +67,14 @@
 
 <br>
 
-### 📈Weekly,Monthly
+### 📈Weekly
 
-- 한 주, 한달동안의 일정을 chart와 달력으로 보여준다.
+- 한 주의 일정을 chart로 보여준다.
+
+<br>
+### 📈Monthly
+
+- 한 달의 일정을 달력으로 보여준다.
 
 <br>
 
