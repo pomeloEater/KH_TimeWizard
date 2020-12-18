@@ -43,9 +43,10 @@ $(document).ready(function () {
 	
 });
 function searchfriend(){
-var url = location.href;
-var inviteurl = "\""+url.split("/timewizard")[1]+"\"";
+var currenturl = location.href;
+var inviteurl = "\""+currenturl.split("/timewizard")[1]+"\"";
 var username = $("#search_text").val();
+var bool = false;
 var searchval = {
 			"user_name": username,
 			"user_no": uno
@@ -76,7 +77,7 @@ var searchval = {
 	    			var dist = searchList[i].user_distinct;
 	    			console.log(dist);
 	    			
-	    			if(url.indexOf("joinroom")!= -1){
+	    			if(currenturl.indexOf("joinroom")!= -1){
 	    				if(status == "ACCEPT" && (friend_no == uno)){
 	    					$(".userlist").append("<p><a href='/timewizard/user/"+dist+"'>"+ user_name +
 	    					"</a><button class='accdeny'onclick='deletefriend("+user_no+","+ uno +","+name+")'><i class='fas fa-user-slash'></i></button>"+
@@ -84,8 +85,8 @@ var searchval = {
 	    				}
 	    				else if(status == "RESP" && (friend_no == uno)){
 	    					$(".userlist").append("<p><a href='/timewizard/user/"+dist+"'>"+ user_name +"</a>님이 친구신청 하셨습니다."+
-	    							"<button class='accdeny' onclick='friendDeny("+user_no+","+name+")'> <i class='fas fa-user-times'></i></button>"
-	    		    				+" <button class='accdeny' onclick='friendAccept("+user_no+")'><i class='fas fa-user-check'></i></button></p>");
+	    							"<button class='accdeny' onclick='friendDeny("+user_no+","+name+")'> <i class='fas fa-user-check'></i></button>"
+	    		    				+" <button class='accdeny' onclick='friendAccept("+user_no+")'><i class='fas fa-user-times'></i></button></p>");
 	    				
 	    				}else if(status == "SEND" && (friend_no == uno)){
 	    		
@@ -124,7 +125,9 @@ var searchval = {
 	    	}
 	    },
 	    error: function(data){
-	    	$(".friendsbar").append("연결이 끊겼습니다.");
+	    	bool = true;
+	    	recntfriend(bool);
+	    	
 	    }
 	});
 }
@@ -136,8 +139,9 @@ function reset(){
 }
 
 function friendlist(){
-	var url = location.href;
-	var inviteurl = "\""+url.split("/timewizard")[1]+"\"";
+	var currenturl = location.href;
+	var inviteurl = "\""+currenturl.split("/timewizard")[1]+"\"";
+	var bool = true;
 	$.ajax({
 	    type: "post",
 	    url: "/timewizard/friend",
@@ -160,7 +164,7 @@ function friendlist(){
 	    			var user_no = flist[i].user_no;
 	    			var dist =  flist[i].user_distinct;
 	    			var friend_no  = flist[i].friend_no;
-	    			if(url.indexOf("joinroom")!= -1){
+	    			if(currenturl.indexOf("joinroom")!= -1){
 	    				if((flist[i].status == "ACCEPT")){
 	    					$(".friendlist").append("<p><a href='/timewizard/user/"+dist+"'>"+ user_name +
 	    					"</a><button class='accdeny'onclick='deletefriend("+user_no+","+ uno +","+name+")'><i class='fas fa-user-slash'></i></button>"+
@@ -170,8 +174,8 @@ function friendlist(){
 	    	    					
 	    	    		}else if(flist[i].status == "RESP"){
 		    					$(".friendlist").append("<p><a href='/timewizard/user/"+dist+"'>"+ user_name +"</a>님이 친구신청 하셨습니다."+
-		    							"<button class='accdeny' onclick='friendDeny("+user_no+","+name+")'> <i class='fas fa-user-times'></i></button>"
-		    		    				+" <button class='accdeny' onclick='friendAccept("+user_no+")'><i class='fas fa-user-check'></i></button></p>");
+		    							"<button class='accdeny' onclick='friendDeny("+user_no+","+name+")'> <i class='fas fa-user-check'></i></button>"
+		    		    				+" <button class='accdeny' onclick='friendAccept("+user_no+")'><i class='fas fa-user-times'></i></button></p>");
 		    			}
 	    			}
 	    			else {
@@ -210,9 +214,25 @@ function friendlist(){
 	    	
 	    },
 	    error: function(data){
-	    	$(".friendsbar").append("연결이 끊겼습니다.");
+	    	bool = true;
+	    	recntfriend(bool);
 	    }
 	});
+}
+
+function recntfriend(bool){
+	var count = 0;
+	
+	console.log("bool: "+bool)
+	if(bool == true){
+		$(".friendsbar").append("<p>연결이 끊겼습니다.</p>");
+		setTimeout(function(){
+			count += 1;
+			friendlist();
+			$('.friendlist').empty();
+			$(".friendsbar").append("<p>연결이 끊겼습니다. 재시도 횟수: "+count+"</p>");
+			}, 2*1000);
+	}
 }
 
 </script>
