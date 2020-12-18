@@ -27,7 +27,7 @@
 		<div class="daily__area">
 			<div class="date__area">
 				<div class="date__status">
-					<div class="date__change"><i class="fas fa-caret-square-left"></i></div>
+					<div class="date__change"><i class="fas fa-caret-square-left" ></i></div>
 					<div class="date__change"><i class="far fa-caret-square-left"></i></div>
 					<div class="date date__month">월</div>
 					<div class="date date__day">일</div>

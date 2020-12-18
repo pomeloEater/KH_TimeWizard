@@ -70,7 +70,7 @@ public class GroupController {
 	public Map<String, List<GroupDto>> ajaxgroupselectlist(@RequestBody GroupDto dto) {
 		 Map<String, List<GroupDto>> map = new HashMap<String, List<GroupDto>>();
 		 List<GroupDto> list = new ArrayList<GroupDto>();
-		 log.info("받아온 값: {}",dto.getGroup_title());
+		 log.info("받아온 값: {}",dto.toString());
 		 list = biz.searchList(dto.getGroup_title());
 		 map.put("selectlist", list);
 		return map;
@@ -93,7 +93,7 @@ public class GroupController {
 	}
 
 	@PostMapping(value="/createres")
-	public String makeRoom(GroupDto dto, URLEncoder encoder) throws UnsupportedEncodingException {
+	public String makeRoom(GroupDto dto) throws UnsupportedEncodingException {
 	 	int res = biz.insert(dto);
 	 	String name = dto.getGroup_title();
 	 	 String encodedParam = URLEncoder.encode(name, "UTF-8");//URL 주소에 넣어줄 파라미터를 인코딩을 해야 한글을 인식함
@@ -110,12 +110,13 @@ public class GroupController {
 	
 	@MessageMapping("/chat/join")
     public void join(ChatDto dto) {
-		
+		 //접속했을때 실행
 		log.info(dto.getUser_id()+"님 등장");
 		int res = biz.clientplus(dto.getChat_title());
 		log.info("결과: {}",res);
 		dto.setChat_content(dto.getUser_id() + "님이 입장하셨습니다.");
         template.convertAndSend("/subscribe/chat/join/"+dto.getChat_title(), dto);
+       
     }
 
 	@MessageMapping("/chat/message")

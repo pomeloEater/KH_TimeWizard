@@ -38,16 +38,28 @@ $(document).ready(function () {
 	screenshot();
  
 });
-
+$(".date__change").click(function(){
+	screenshot();
+	$(".date__change").css("visibility","hidden");
+	 setTimeout(() => {
+		 $(".date__change").css("visibility","");
+	  }, 1000);
+});
 /* html2canvas - 스크린샷 */
 function screenshot(){
-  document.getElementById("downloadbtn").style.display = "none";
+$("#downloadbtn").css("visibility","hidden");
+$("#kakao-link-btn").css("visibility","hidden");
+  var image = $("#mycanvas");
+  if(image){
+	  image.remove();
+  }
   setTimeout(() => {
       html2canvas(document.getElementById("daily__part")).then(function(canvas) {
       canvas.setAttribute("id", "mycanvas");
       canvas.setAttribute("style", "display:none");
       document.body.appendChild(canvas);
-      document.getElementById("downloadbtn").style.display = "";
+      $("#downloadbtn").css("visibility","");
+      $("#kakao-link-btn").css("visibility","");
       download();
     });
   }, 1000);

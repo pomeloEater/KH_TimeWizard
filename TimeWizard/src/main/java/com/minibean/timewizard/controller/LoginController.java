@@ -81,7 +81,7 @@ public class LoginController {
 		boolean check = false;
 		if (res != null) {
 			// 로그인 값을 계속 가지고 있는 Session
-//			logger.info("user role : " + res.getUser_role());
+			//	logger.info("user role : " + res.getUser_role());
 			session.setAttribute("login", res);
 			check = true;
 		}
